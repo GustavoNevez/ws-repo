@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const Estabelecimento = require('caminho/para/modelo/Estabelecimento');
-const jwt = require('jsonwebtoken');
+const Estabelecimento = require('../models/estabelecimento');
 const bcrypt = require('bcryptjs');
-const authConfig = require('caminho/para/authConfig');
+const jwt = require('jsonwebtoken');
+const authConfig = require('../config/auth.json')
 
 router.post('/register', async (req, res) => {
     try {
         const existingUser = await Estabelecimento.findOne({ email: req.body.email });
         if (existingUser) {
-            return res.json({ error: 'E-mail já está em uso' }); 
+            return res.json({ error: 'E-mail já está em uso' });  
         }
         const newUser = await new Estabelecimento(req.body).save();
         newUser.senha = undefined;
@@ -29,7 +29,7 @@ router.post('/auth', async (req, res) => {
         const { email, senha } = req.body;
         const user = await Estabelecimento.findOne({ email }).select("+senha");
         if (!user) {
-            return res.json({ error: "Email não encontrado" }); 
+            return res.json({ error: "Email não encontrado" });  
         }
         if (!await bcrypt.compare(senha, user.senha)) {
             return res.json({ error: "Senha inválida" });  
