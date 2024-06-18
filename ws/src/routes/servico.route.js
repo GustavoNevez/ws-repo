@@ -1,5 +1,5 @@
 const express = require('express');
-const multer = require('multer');
+const router = express.Router();
 const Servico = require('../models/servico');
 
 router.post("/", async (req,res)=> {
