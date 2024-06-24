@@ -100,7 +100,7 @@ router.post('/dias-disponiveis', async (req, res) => {
              
                 const horariosSeparados = _.flatten(horariosLivres).map(horario => [horario]);
                 agenda.push({ [ultimoDia.format('YYYY-MM-DD')]: horariosSeparados });
-                if (!logOnce)) {
+                if (!logOnce) {
                     console.log('Dados processados:',horariosOcupados,horariosLivres,agenda,agendamentos);
                     logOnce = true; // Seta a flag para true após o log
                 }
