@@ -33,8 +33,8 @@ router.post('/dias-disponiveis', async (req, res) => {
     try {
         const { data, estabelecimentoId, servicoId, clienteId } = req.body;
         const servico = await Servico.findById(servicoId).select('duracao');
-        const horarios = await Horario.find({ estabelecimentoId: '6665161912377535a22a708f' }); //Deixei esse horarioId fixo, pois vai ser usado apenas no aplicativo
-        console.log('REQUISICAO:',data,estabelecimentoId, servicoId)
+        const horarios = await Horario.find({ estabelecimentoId: '6665161912377535a22a708f' });
+        
         let agenda = [];
         let ultimoDia = moment(data);
 
@@ -44,15 +44,15 @@ router.post('/dias-disponiveis', async (req, res) => {
             moment(servico.duracao).add(servicoDuracao, 'minutes'),
             util.DURACAO_SERVICO, false
         ).length;
-        console.log('BANCO:',servico,horarios)
-        console.log('SERVICO/DURACAO',servicoDuracao,servicoPartes);
-
+        
         let logOnce = false;
         for (let i = 0; i <= 365 && agenda.length <= 7; i++) {
             const partesValidos = horarios.filter((horario) => {
                 const diaSemanaDisponivel = horario.dias.includes(moment(ultimoDia).day());
                 return diaSemanaDisponivel;
             });
+
+            console.log(partesValidos)
 
             if (partesValidos.length > 0) {
                 let horariosDoDia = [];
@@ -67,7 +67,10 @@ router.post('/dias-disponiveis', async (req, res) => {
                         )
                     ];
                 }
-
+                if (!logOnce) {
+                    console.log(horariosDoDia);
+                    logOnce = true; // Seta a flag para true após o log
+                }
                 const agendamentos = await Agendamento.find({
                     estabelecimentoId,
                     status: 'A',
@@ -100,10 +103,7 @@ router.post('/dias-disponiveis', async (req, res) => {
              
                 const horariosSeparados = _.flatten(horariosLivres).map(horario => [horario]);
                 agenda.push({ [ultimoDia.format('YYYY-MM-DD')]: horariosSeparados });
-                if (!logOnce) {
-                    console.log('Dados processados:',horariosOcupados,horariosLivres,agenda,agendamentos);
-                    logOnce = true; // Seta a flag para true após o log
-                }
+                
                 
             }
             ultimoDia = moment(ultimoDia).add(1, 'day');
