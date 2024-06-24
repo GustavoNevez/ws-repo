@@ -65,10 +65,7 @@ router.post('/dias-disponiveis', async (req, res) => {
                         )
                     ];
                 }
-                if (!logOnce) {
-                    console.log(partesValidos);
-                    logOnce = true; // Seta a flag para true após o log
-                }
+                
                 const agendamentos = await Agendamento.find({
                     estabelecimentoId,
                     status: 'A',
@@ -78,10 +75,16 @@ router.post('/dias-disponiveis', async (req, res) => {
                     },
                 }).select('data duracao -_id'); 
 
+
                 let horariosOcupados = agendamentos.map((agendamento) => ({
                     inicio: moment(agendamento.data),
                     final: moment(agendamento.data).add(agendamento.duracao, 'minutes'), 
                 }));
+
+                if (!logOnce) {
+                    console.log('agendamentos:',agendamentos,'horariosOcupados:',horariosOcupados);
+                    logOnce = true; // Seta a flag para true após o log
+                }
 
                 horariosOcupados = horariosOcupados.map((horario) =>
                     util.partesMinutos(horario.inicio, horario.final, util.DURACAO_SERVICO)
