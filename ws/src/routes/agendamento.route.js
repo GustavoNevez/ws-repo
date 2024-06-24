@@ -46,6 +46,8 @@ router.post('/dias-disponiveis', async (req, res) => {
         ).length;
         console.log('BANCO:',servico,horarios)
         console.log('SERVICO/DURACAO',servicoDuracao,servicoPartes);
+
+        let logOnce = false;
         for (let i = 0; i <= 365 && agenda.length <= 7; i++) {
             const partesValidos = horarios.filter((horario) => {
                 const diaSemanaDisponivel = horario.dias.includes(moment(ultimoDia).day());
@@ -98,6 +100,11 @@ router.post('/dias-disponiveis', async (req, res) => {
              
                 const horariosSeparados = _.flatten(horariosLivres).map(horario => [horario]);
                 agenda.push({ [ultimoDia.format('YYYY-MM-DD')]: horariosSeparados });
+                if (!logOnce)) {
+                    console.log('Dados processados:',horariosOcupados,horariosLivres,agenda,agendamentos);
+                    logOnce = true; // Seta a flag para true após o log
+                }
+                
             }
             ultimoDia = moment(ultimoDia).add(1, 'day');
         }
