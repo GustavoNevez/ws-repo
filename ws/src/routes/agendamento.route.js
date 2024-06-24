@@ -52,8 +52,6 @@ router.post('/dias-disponiveis', async (req, res) => {
                 return diaSemanaDisponivel;
             });
 
-            console.log(partesValidos)
-
             if (partesValidos.length > 0) {
                 let horariosDoDia = [];
 
