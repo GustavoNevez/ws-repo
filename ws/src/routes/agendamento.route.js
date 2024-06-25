@@ -75,10 +75,7 @@ router.post('/dias-disponiveis', async (req, res) => {
                     ];
                 }
 
-                if (!logOnce) {
-                    console.log('Partes:',horariosDoDia);
-                    logOnce = true; // Seta a flag para true após o log
-                }
+               
                 
                 const agendamentos = await Agendamento.find({
                     estabelecimentoId,
