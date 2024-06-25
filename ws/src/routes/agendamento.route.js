@@ -60,12 +60,15 @@ router.post('/dias-disponiveis', async (req, res) => {
                 for (let espaco of partesValidos) {
                     console.log('Espaco:', espaco);
                     console.log('UltimoDia:', ultimoDia.format('YYYY-MM-DD'));
-                    const partes = util.partesMinutos(
-                        util.horariosDoDia(ultimoDia, espaco.inicio),
-                        util.horariosDoDia(ultimoDia, espaco.fim),
-                        util.DURACAO_SERVICO
-                    );
+
+                    const inicio = util.horariosDoDia(ultimoDia, espaco.inicio);
+                    const fim = util.horariosDoDia(ultimoDia, espaco.fim);
+                    const partes = util.partesMinutos(inicio, fim, util.DURACAO_SERVICO);
+
+                    console.log('Inicio:', inicio);
+                    console.log('Fim:', fim);
                     console.log('Partes:', partes);
+
                     horariosDoDia = [
                         ...horariosDoDia,
                         ...partes
