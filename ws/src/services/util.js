@@ -31,7 +31,7 @@ module.exports = {
     
 
     horariosDoDia: (data, hora) => {
-        const relacao = `${moment(data).format('YYYY-MM-DD')}T${moment(hora).format('HH:mm')}`;
+        const relacao = `${moment(data).format('YYYY-MM-DD')}T${moment(hora).format('HH-mm')}`;
         return relacao
     },
 
