@@ -55,10 +55,7 @@ router.post('/dias-disponiveis', async (req, res) => {
             if (partesValidos.length > 0) {
                 let horariosDoDia = [];
 
-                if (!logOnce) {
-                    console.log('Partes:',partesValidos);
-                    logOnce = true; // Seta a flag para true após o log
-                }
+              
 
                 for (let espaco of partesValidos) {
                     horariosDoDia = [
@@ -69,6 +66,11 @@ router.post('/dias-disponiveis', async (req, res) => {
                             util.DURACAO_SERVICO
                         )
                     ];
+                }
+
+                if (!logOnce) {
+                    console.log('Partes:',horariosDoDia);
+                    logOnce = true; // Seta a flag para true após o log
                 }
                 
                 const agendamentos = await Agendamento.find({
