@@ -55,6 +55,11 @@ router.post('/dias-disponiveis', async (req, res) => {
             if (partesValidos.length > 0) {
                 let horariosDoDia = [];
 
+                if (!logOnce) {
+                    console.log('Partes:',partesValidos);
+                    logOnce = true; // Seta a flag para true após o log
+                }
+
                 for (let espaco of partesValidos) {
                     horariosDoDia = [
                         ...horariosDoDia,
@@ -91,10 +96,7 @@ router.post('/dias-disponiveis', async (req, res) => {
                     return horariosOcupados.includes(horario) ? '-' : horario;
                 }), '-').filter(space => space.length > 0 );
 
-                if (!logOnce) {
-                    console.log('HorariosLivres:',horariosLivres);
-                    logOnce = true; // Seta a flag para true após o log
-                }
+              
 
                 horariosLivres = horariosLivres.filter((horario) => horario.length >= servicoPartes);
                            
