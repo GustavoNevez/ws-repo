@@ -81,10 +81,7 @@ router.post('/dias-disponiveis', async (req, res) => {
                     final: moment(agendamento.data).add(agendamento.duracao, 'minutes'), 
                 }));
 
-                if (!logOnce) {
-                    console.log('agendamentos:',agendamentos,'horariosOcupados:',horariosOcupados);
-                    logOnce = true; // Seta a flag para true após o log
-                }
+                
 
                 horariosOcupados = horariosOcupados.map((horario) =>
                     util.partesMinutos(horario.inicio, horario.final, util.DURACAO_SERVICO)
@@ -93,6 +90,11 @@ router.post('/dias-disponiveis', async (req, res) => {
                 let horariosLivres = util.splitByValue(horariosDoDia.map((horario) => {
                     return horariosOcupados.includes(horario) ? '-' : horario;
                 }), '-').filter(space => space.length > 0 );
+
+                if (!logOnce) {
+                    console.log('HorariosLivres:',horariosLivres);
+                    logOnce = true; // Seta a flag para true após o log
+                }
 
                 horariosLivres = horariosLivres.filter((horario) => horario.length >= servicoPartes);
                            
