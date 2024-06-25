@@ -58,6 +58,7 @@ router.post('/dias-disponiveis', async (req, res) => {
               
 
                 for (let espaco of partesValidos) {
+                    console.log(partesValidos)
                     horariosDoDia = [
                         ...horariosDoDia,
                         ...util.partesMinutos(
