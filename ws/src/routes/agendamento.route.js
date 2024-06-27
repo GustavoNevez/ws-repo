@@ -79,7 +79,7 @@ router.post('/dias-disponiveis', async (req, res) => {
                         $lte: moment(ultimoDia).endOf('day'),
                     },
                 }).select('data duracao -_id'); 
-
+                
 
                 let horariosOcupados = agendamentos.map((agendamento) => ({
                     inicio: moment(agendamento.data),
@@ -105,6 +105,13 @@ router.post('/dias-disponiveis', async (req, res) => {
                       (horario, index) => slot.length - index >= servicoPartes
                     )
                   );
+
+                  if (!logOnce) {
+                    console.log('Agendamenotos:',agendamentos)
+                    console.log('HorariosLivres:',horariosLivres)
+                    console.log('HorariosOcupados:',horariosOcupados)
+                    logOnce = true;
+                }
              
                 const horariosSeparados = _.flatten(horariosLivres).map(horario => [horario]);
                 agenda.push({ [ultimoDia.format('YYYY-MM-DD')]: horariosSeparados });
