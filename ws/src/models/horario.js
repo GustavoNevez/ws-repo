@@ -10,8 +10,13 @@ const horario = new Schema ({
     tipoServico: [{
         type: mongoose.Types.ObjectId,
         ref: 'Servico',
-        required:true,
+        required: false, // Tornar opcional para permitir horários gerais
     }],
+    profissionalId: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Profissional',
+        required: false, // Tornar opcional para permitir horários do estabelecimento
+    },
     dias: {
         type: [Number],
         required: true,
@@ -27,6 +32,12 @@ const horario = new Schema ({
     dataCadastro: {
         type: Date,
         default: Date.now,
+    },
+    status: {
+        type: String,
+        enum: ['A', 'I'],  // A = Ativo, I = Inativo
+        default: 'A',
+        required: true,
     }
 });
 

@@ -30,23 +30,18 @@ const clienteSchema = new Schema({
     endereco: {
         cidade: {
             type: String,
-            required: true,
         },
         uf: {
             type: String,
-            required: true,
         },
         cep: {
             type: String,
-            required: true,
         },
         numero: {
             type: String,
-            required: true,
         },
         rua: {
             type: String,
-            required: true,
         }
     },
     documento: {
@@ -54,11 +49,9 @@ const clienteSchema = new Schema({
             type: String,
             enum: ['rg', 'cpf'],
             default: 'cpf',
-            required: true,
         },
         numero: {
             type: String,
-            required: true,
         }
     },
     dataCadastro: {
@@ -67,6 +60,7 @@ const clienteSchema = new Schema({
     },
     telefone: {
         type: String,
+        required: true,
     }
 });
 

@@ -28,6 +28,7 @@ app.use('/servico',authenticateMiddleware, require('./src/routes/servico.route')
 app.use('/horario',authenticateMiddleware, require('./src/routes/horario.route'));
 app.use('/agendamento',authenticateMiddleware, require('./src/routes/agendamento.route'));
 app.use('/cliente',authenticateMiddleware, require('./src/routes/cliente.route'));
+app.use('/profissional',authenticateMiddleware, require('./src/routes/profissional.route'));
 app.use('/auth', require('./src/controllers/authController'));
 
 

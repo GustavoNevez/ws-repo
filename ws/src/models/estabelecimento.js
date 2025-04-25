@@ -3,6 +3,11 @@ const bcryptjs = require('bcryptjs');
 const Schema = mongoose.Schema;
 
 const estabelecimento = new Schema ({
+    customLink: {
+        type: String,
+        unique: true,
+        sparse: true, // Allows null values to support existing records
+    },
     nome: {
         type: String,
         default:null,
@@ -22,7 +27,6 @@ const estabelecimento = new Schema ({
     telefone: {
         type: String,
         default:null,
-        
     },
  
     

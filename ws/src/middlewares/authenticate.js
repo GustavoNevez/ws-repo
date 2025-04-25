@@ -18,6 +18,7 @@ module.exports = (req, res, next) => {
 
     const [ scheme, token] = parts;
 
+
     if(scheme.indexOf("Bearer") !== 0){
         return res.json({
             error:true, message:"token malformeted"
@@ -28,6 +29,7 @@ module.exports = (req, res, next) => {
             return res.json({error:true, message:"Invalid token/expired"});
         }
         req.userLogged = decoded;
+        
         return next();
     })
    

@@ -1,7 +1,7 @@
 moment = require('moment');
 
 module.exports = {
-    DURACAO_SERVICO:30,
+    DURACAO_SERVICO:15,
 
     horaParaMinutos: (horaMinuto) => {
         
@@ -15,24 +15,19 @@ module.exports = {
       const partes = [];
       inicio = moment(inicio);
       fim = moment(fim);
-
-      console.log('Inicio:', inicio.format('YYYY-MM-DDTHH:mm'));
-      console.log('Fim:', fim.format('YYYY-MM-DDTHH:mm'));
-      console.log('Duracao:', duracao);
-
-      while (fim > inicio) {
+      while (inicio.clone().add(duracao, 'minutes') <= fim) {
           partes.push(inicio.format('HH:mm'));
           inicio = inicio.add(duracao, 'minutes');
       }
-
-      console.log('Partes:', partes);
       return partes;
   },
-    
+  
 
     horariosDoDia: (data, hora) => {
-        const relacao = `${moment(data).format('YYYY-MM-DD')}T${moment(hora).format('HH-mm')}`;
-        return relacao
+        // Properly parse the time string using a specific format
+        // hora is expected to be in "HH:MM" format (e.g., "08:00")
+        const formattedDate = moment(data).format('YYYY-MM-DD');
+        return moment(`${formattedDate} ${hora}`, 'YYYY-MM-DD HH:mm');
     },
 
     splitByValue: (array, value) => {

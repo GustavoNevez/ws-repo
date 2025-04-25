@@ -9,6 +9,11 @@ const agendamento = new Schema ({
         required:true,
         
     }],
+    profissionalId: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'Profissional',
+        required: true,
+    }],
     servicoId: [{
         type: mongoose.Types.ObjectId,
         ref: 'Servico',
